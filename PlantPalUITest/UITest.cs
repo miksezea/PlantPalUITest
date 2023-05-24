@@ -9,7 +9,7 @@ namespace PlantPalUITest
     [TestClass]
     public class UITest
     {
-        private static readonly string url = "https://plantpal.azurewebsites.net/";
+        private static readonly string url = "https://plantpalwebsite.azurewebsites.net/";
         private static readonly string driverDirectory = "C:/WebDriver/chromedriver.exe";
         private static readonly string driverDirectoryFF = "C:/WebDriver/geckodriver.exe";
 
@@ -33,6 +33,18 @@ namespace PlantPalUITest
         [TestMethod]
         public void WebTitleTest()
         {
+            _driver.Navigate().GoToUrl(url);
+            Assert.AreEqual("PlantPal", _driver.Title);
+
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+
+
+
+            IWebElement table = wait.Until(d => d.FindElement(By.Id("plantsTable")));
+
+
+            string listText = table.Text;
+            Assert.IsTrue(listText.Contains("tulip"));
         }
     }
 }
